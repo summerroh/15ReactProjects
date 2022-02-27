@@ -1,18 +1,28 @@
 import React from 'react';
 
-const Menu = ({title, price, img, desc, visible}) => {
-  return (
-    visible ?
+const Menu = ({ menuItem }) => {
 
-    (<main>
-      <img className='photo' src={img} />
-      <h1 className='title'>{title}</h1>
-      <h2 className='price'>{price}</h2>
-      <p className='description'>{desc}</p>
-    </main>) :
+  return (
     
-    (null)
-  );
-};
+    <div className='section-center'>
+
+      {menuItem.map((item) => {
+        const { id, title, img, desc, price } = item;
+        return (
+          <article key={id} className='menu-item'>
+            <img src={img} alt={title} className='photo' />
+            <div className='item-info'>
+              <header>
+                <h4>{title}</h4>
+                <h4 className='price'>{price}</h4>
+              </header>
+              <p className='item-text'>{desc}</p>
+            </div>
+          </article>
+        )
+      })}
+      </div>
+    )}
+
 
 export default Menu;

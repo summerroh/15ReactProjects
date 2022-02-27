@@ -3,42 +3,49 @@ import Menu from './Menu';
 import Categories from './Categories';
 import items from './data';
 
+//1 way of getting unique values form array
+const allCategories = new Set(items.map( item => item.category));
+console.log(allCategories)
+
+//2 way of getting unique values from array
+// let categories = items.map(item => item.category)
+//                       .filter(uniqueValue)
+// function uniqueValue(value, index, self) {
+//   return self.indexOf(value) === index
+// }
+
 function App() {
-  const [filter, setFilter] = useState('All')
-  
-  const onFilterChange = (selectedFilter) => {
-    setFilter(selectedFilter)
+  const [menuItem, setMenuItem] = useState(items);
+  const [categories, setCategories] = useState();
+
+  const filterItem = ( category ) => {
+    if(category === 'All') {
+      setMenuItem(items)
+      return;
+    }
+    const newItems = items.filter((item) => 
+    item.category === category)
+    setMenuItem(newItems)
   }
 
-  let categories = items.map(item => item.category)
-                        .filter(uniqueValue)
-
-  function uniqueValue(value, index, self) {
-    return self.indexOf(value) === index
-  }
 
   return (
     <main>
-      <h2  className='title'>Our Menu</h2>
-      <div className='underline'></div>
+      <section className='menu section'>
+        <div className='title'>        
+          <h2>Our Menu</h2>
+          <div className='underline'></div>
+        </div>
 
       <div className='btn-container'>
-        <button className='filter-btn' onClick={() => setFilter('All')}>All</button>
-        {categories.map(item => {return <Categories item={item} onFilterChange={onFilterChange}/>} )}
+        <button className='filter-btn'>All</button>
+        <Categories categories={categories} />
+        {/* {categories.map(item => {return <Categories item={item} onFilterChange={onFilterChange}/>} )} */}
       </div>
 
-      {items.map(item => {
-        return (
-          <Menu key={item.id}
-                title={item.title} 
-                price={item.price} 
-                img={item.img} 
-                desc={item.desc}
-                visible={filter === item.category | filter === 'All'} />
-                ) 
-        })}
-      
-      
+        <Menu menuItem={menuItem} />
+
+      </section>
     </main>
   );
 }

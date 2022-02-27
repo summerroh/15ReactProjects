@@ -1,13 +1,14 @@
 import React from 'react';
 
-const Categories = ({item, onFilterChange}) => {
+const Categories = ({ categories }) => {
 
   return (
-    <main>
+    <div className='btn-container'>
       <button className='filter-btn'
-              onClick={() => onFilterChange(item)}
-      >{item}</button>
-    </main>
+              onClick={() => categories('breakfast')}
+      >Breakfast
+      </button>
+    </div>
   )
 };
 
