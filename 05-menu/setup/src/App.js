@@ -4,8 +4,7 @@ import Categories from './Categories';
 import items from './data';
 
 //1 way of getting unique values form array
-const allCategories = new Set(items.map( item => item.category));
-console.log(allCategories)
+const allCategories = ['All',...new Set(items.map( item => item.category))]
 
 //2 way of getting unique values from array
 // let categories = items.map(item => item.category)
@@ -16,7 +15,7 @@ console.log(allCategories)
 
 function App() {
   const [menuItem, setMenuItem] = useState(items);
-  const [categories, setCategories] = useState();
+  const [categories, setCategories] = useState(allCategories);
 
   const filterItem = ( category ) => {
     if(category === 'All') {
@@ -28,7 +27,6 @@ function App() {
     setMenuItem(newItems)
   }
 
-
   return (
     <main>
       <section className='menu section'>
@@ -38,9 +36,7 @@ function App() {
         </div>
 
       <div className='btn-container'>
-        <button className='filter-btn'>All</button>
-        <Categories categories={categories} />
-        {/* {categories.map(item => {return <Categories item={item} onFilterChange={onFilterChange}/>} )} */}
+        <Categories categories={categories} filterItem={filterItem} />
       </div>
 
         <Menu menuItem={menuItem} />
