@@ -6,35 +6,26 @@ function App() {
   const [people, setPeople] = useState(data)
   const [value, setValue] = useState(0);
   
-  const dataLength = people.length-1
   
-  const valueSetUp = () => {
-    if (value===dataLength) {
-      setValue(0)
-    } else {
-      setValue(value+1)
-    }
-  }
+  useEffect(() =>{
+    const lastIndex = people.length-1
 
-  const valueSetDown = () => {
-    if (value===0) {
-      setValue(dataLength)
-    } else {
-      setValue(value-1)
-    }
-  }
+    if (value>lastIndex) {
+      setValue(0) }
 
-  const timeout = setTimeout(onTimeOut, 5000);
-
-  function onTimeOut() {
-    valueSetUp()
-    stopFunction()
-  }
-
-  function stopFunction() {
-    clearTimeout(timeout);
-  }
+    if (value<0) {
+      setValue(lastIndex) }
   
+    },[value, people])
+
+  useEffect( () => { 
+    let slider = setInterval(() => { setValue(value+1) }, 3000)
+    return(() => {
+      clearInterval(slider)
+    })
+  }, [value] )
+
+
   return (
     <section className='section'>
       <div className='title'>
@@ -44,15 +35,21 @@ function App() {
       </div>
       
       <button className='prev' onClick={()=>{
-          valueSetDown()}}> <FiChevronLeft />
+          setValue(value-1)}}> <FiChevronLeft />
       </button>
 
       <div className='section-center'>
         {people.map((person, personIndex) => { 
         const { id, image, name, title, quote } = person;
-        
+        let position = 'nextSlide'
+        if (personIndex === value ){
+          position='activeSlide'
+        }
+        if (personIndex === value -1 || (value === 0 && personIndex === people.length -1)) {
+          position = 'lastSlide'
+        }
         return (
-          <article key={id}>
+          <article key={id} className={position}>
             <img className='person-img' src={image} alt={name} />
             <h4>{name}</h4>
             <p className='title'>{title}</p>
@@ -64,7 +61,7 @@ function App() {
       </div>
 
       <button className='next' onClick={()=>{
-          valueSetUp()}}> <FiChevronRight />
+          setValue(value+1)}}> <FiChevronRight />
       </button>
 
     </section>
