@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import data from './data';
 function App() {
   const [textData, setTextData] = useState(data);
@@ -23,17 +23,6 @@ function App() {
     setTextValue(event.target.value);
   };
 
-  useEffect(() => {
-    renderItem()
-  },[numParagraph])
-
-  const renderItem = () => {
-    for (let i=0; i<numParagraph; i++) {
-      return (
-        <p>{textData[i]}</p>
-      )
-    }
-  }
   return (
     <main>
       <h3>TIRED OF BORING LOREM IPSUM?</h3>
