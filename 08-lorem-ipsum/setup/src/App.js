@@ -24,29 +24,32 @@ function App() {
   };
 
   return (
-    <main>
+    <section className='section-center'>
       <h3>TIRED OF BORING LOREM IPSUM?</h3>
 
-      <form onSubmit={handleSubmit}>
-        <label>Paragraphs:
+      <form className='lorem-form' onSubmit={handleSubmit}>
+        <label>
+          Paragraphs:
           <input 
             type='number'
             value={textValue}
             onChange={(event)=>handleChange(event)}>
           </input>
-          <button type='submit'>GENERATE</button>
+          <button type='submit' className='btn'>GENERATE</button>
         </label>
       </form>
 
-      {textData.map((paragraph, index)=>{
-        if ( index < numParagraph ) {
-          return (
-            <p key={index}>{paragraph}</p>
-          )
-        }
-      })}
+      <article className='lorem-text'>
+        {textData.map((paragraph, index)=>{
+          if ( index < numParagraph ) {
+            return (
+              <p key={index}>{paragraph}</p>
+            )
+          }
+        })}
+      </article>
 
-    </main>
+    </section>
     );
 };
 
